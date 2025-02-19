@@ -21,8 +21,10 @@ const PostPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
 	return (
 		<div className="max-w-4xl mx-auto px-4 py-8">
-			<h1 className="text-3xl font-bold text-gray-800 mb-4">{post.title}</h1>
+			<h1 className="text-3xl font-bold text-gray-800">{post.title}</h1>
 			
+			<p className="text-gray-500 text-sm mb-2">{ post.description }</p>
+
 			<p className="text-gray-500 text-sm">{ new Date(post.date).toLocaleDateString() }</p>
 
 			{/* 🔹 Affichage des catégories */}
@@ -33,6 +35,8 @@ const PostPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
 					</Link>
 				))}
 			</div>
+
+			<hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
 
 			<div className="prose max-w-none">
 				<ReactMarkdown

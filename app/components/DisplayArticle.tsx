@@ -1,8 +1,6 @@
-import Link from "next/link";
+import { DisplayArticleProps } from "../types";
 
-interface DisplayArticleProps {
-	posts: any[];
-}
+import Link from "next/link";
 
 const DisplayArticle: React.FC<DisplayArticleProps> = ({ posts }) => {
 	return (
