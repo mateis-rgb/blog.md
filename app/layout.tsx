@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
+import Link from "next/link";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -21,7 +22,14 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
 	return (
 		<html lang="fr">
+			<head>
+				<link rel="preconnect" href="https://fonts.googleapis.com" />
+				<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+				<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet" />
+			</head>
+	
 			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+
 				<div className="min-h-screen bg-gray-50 text-gray-900">
 					{/* Navbar */}
 					<nav className="bg-gray-800 text-white p-4">
@@ -29,9 +37,10 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
 							<h1 className="text-2xl font-semibold">{metadata.title as string}</h1>
 							
 							<ul className="flex space-x-6">
-								<li><a href="/" className="hover:text-blue-300">Accueil</a></li>
-								<li><a href="/about" className="hover:text-blue-300">À propos</a></li>
-								<li><a href="/contact" className="hover:text-blue-300">Contact</a></li>
+								<li><Link href="/" className="hover:text-blue-300">Accueil</Link></li>
+								<li><Link href="/categories" className="hover:text-blue-300">Catégories</Link></li>
+								<li><Link href="/about" className="hover:text-blue-300">À propos</Link></li>
+								<li><Link href="/contact" className="hover:text-blue-300">Contact</Link></li>
 							</ul>
 						</div>
 					</nav>

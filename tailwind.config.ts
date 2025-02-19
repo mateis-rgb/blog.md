@@ -6,6 +6,13 @@ export default {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  layers: {
+	'no-tailwindcss': {
+		'.no-tailwindcss': {
+			all: 'unset',
+		}
+	}
+  },
   theme: {
     extend: {
       colors: {
