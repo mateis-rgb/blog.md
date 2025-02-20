@@ -1,5 +1,28 @@
 import { IconType } from "react-icons";
 
+
+export type Category = string;
+
+export type PostAttribute = {
+	title: string;
+	date: string;
+	categories: Category[];
+	description: string;
+	content?: string;
+}
+
+export type Post = {
+	id: string;
+	path: string
+	attributes: PostAttribute;
+}
+
+export type postJSONFile = {
+	categories: Category[];
+	posts: Post[];
+}
+
+
 export type Sort = "recent" | "ancient" | "default";
 
 export interface HomeClientProps {
@@ -17,7 +40,7 @@ export interface CodeBlockProps {
 }
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-	variant?: "primary" | "secondary" | "danger" | "outline";
+	variant?: "primary" | "secondary" | "danger" | "success" | "outline";
 	size?: "small" | "medium" | "large";
 	icon?: IconType;
 	iconPosition?: "left" | "right";

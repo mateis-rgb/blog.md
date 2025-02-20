@@ -1,13 +1,13 @@
 "use client"
 
-import { useState } from "react"
-import { HomeClientProps, Option, Sort } from "./types"
+import { KeyboardEvent, useState } from "react"
+import { HomeClientProps, Option, Sort } from "@/app/types"
 
 import { IoSearch } from "react-icons/io5"
-import DisplayArticle from "./components/DisplayArticle"
-import Button from "./components/Button"
-import Input from "./components/Input"
-import Select from "./components/Select"
+import DisplayArticle from "@/app/components/DisplayArticle"
+import Button from "@/app/components/Button"
+import Input from "@/app/components/Input"
+import Select from "@/app/components/Select"
 
 const HomeClient: React.FC<HomeClientProps> = ({ allPosts, allCategories }) => {
 	const [searchTerm, setSearchTerm] = useState("");
@@ -31,7 +31,9 @@ const HomeClient: React.FC<HomeClientProps> = ({ allPosts, allCategories }) => {
 		sortCategoryOptions.push({ label: category, value: category })
 	});
 
-	const handleUpdate = (e: any) => {
+	const handleUpdate = () => {
+		console.log('re toto');
+
 		setIsLoading(true);
 
 		if (selectedCategory === "default" && searchTerm === "" && sortOrder === "default") {
@@ -57,6 +59,12 @@ const HomeClient: React.FC<HomeClientProps> = ({ allPosts, allCategories }) => {
 		setIsLoading(false);
 	}
 
+	const handleKeyUp = (e: KeyboardEvent) => {
+		if (e.key === "Enter") {
+			handleUpdate()
+		}
+	}
+
 	return (
 		<div className="p-6">
 			{/* 🔍 Barre de recherche */}
@@ -66,7 +74,7 @@ const HomeClient: React.FC<HomeClientProps> = ({ allPosts, allCategories }) => {
 				placeholder="Rechercher un article..."
 				onChange={(e) => setSearchTerm(e.target.value)}
 				className="w-full p-2 border rounded-md mb-4"
-				onKeyUp={(e) => e.key === "Enter" ? handleUpdate : "" }
+				onKeyUp={handleKeyUp}
 				disabled={isLoading}
 			/>
 

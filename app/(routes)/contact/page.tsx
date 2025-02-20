@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 
-import Input from "../components/Input";
-import Select from "../components/Select";
-import Button from "../components/Button";
-import { Option } from "../types";
+import Input from "@/app/components/Input";
+import Select from "@/app/components/Select";
+import Button from "@/app/components/Button";
+import { Option } from "@/app/types";
 
 const Contact = () => {
 	const [isLoading, setIsLoading] = useState(false);

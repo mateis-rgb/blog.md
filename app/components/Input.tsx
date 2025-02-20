@@ -41,7 +41,7 @@ const Input: React.FC<InputProps> = ({
 						rows={rows}
 						id={id}
 						name="message"
-						className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+						className={`${baseClasses} ${sizeClasses} ${variantClasses} ${disabledClasses} ${className}`}
 						required
 						{...props}
 					/>

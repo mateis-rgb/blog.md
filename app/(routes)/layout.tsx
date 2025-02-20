@@ -4,8 +4,8 @@ import clsx from "clsx"
 
 import Link from "next/link"
 import NextTopLoader from "nextjs-toploader"
-import { DarkThemeProvider } from "./provider/DarkThemeProvider"
-import DarkModeToggle from "./components/DarkThemeToggle"
+import { DarkThemeProvider } from "@/app/provider/DarkThemeProvider"
+// import DarkModeToggle from "@/app/components/DarkThemeToggle"
 
 import "./globals.css"
 

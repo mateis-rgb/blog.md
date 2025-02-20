@@ -1,5 +1,5 @@
-import { getAllCategories, getAllPosts } from "./lib/posts";
-import HomeClient from "./HomeClient";
+import { getAllCategories, getAllPosts } from "@/app/lib/posts";
+import HomeClient from "@/app/(routes)/HomeClient";
 
 export const dynamic = "force-static";
 

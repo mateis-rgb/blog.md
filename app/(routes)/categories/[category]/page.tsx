@@ -1,6 +1,5 @@
 import DisplayArticle from "@/app/components/DisplayArticle";
 import { getPostsByCategory } from "@/app/lib/posts"
-import Link from "next/link";
 
 const CategoryPage = async ({ params }: { params: Promise<{ category: string }> }) => {
 	const resolvedParams = await params;
