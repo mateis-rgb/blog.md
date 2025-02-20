@@ -5,7 +5,6 @@ import { HomeClientProps, Option, Sort } from "./types"
 
 import { IoSearch } from "react-icons/io5"
 import DisplayArticle from "./components/DisplayArticle"
-import { motion } from "framer-motion"
 import Button from "./components/Button"
 import Input from "./components/Input"
 import Select from "./components/Select"
@@ -62,11 +61,13 @@ const HomeClient: React.FC<HomeClientProps> = ({ allPosts, allCategories }) => {
 		<div className="p-6">
 			{/* 🔍 Barre de recherche */}
 			<Input
+				id="search"
 				type="text"
 				placeholder="Rechercher un article..."
 				onChange={(e) => setSearchTerm(e.target.value)}
 				className="w-full p-2 border rounded-md mb-4"
 				onKeyUp={(e) => e.key === "Enter" ? handleUpdate : "" }
+				disabled={isLoading}
 			/>
 
 			{/* 🏷️ Filtres */}
@@ -76,6 +77,7 @@ const HomeClient: React.FC<HomeClientProps> = ({ allPosts, allCategories }) => {
 					defaultValue="Toutes les catégories"
 					options={sortCategoryOptions}
 					onChange={(e) => setSelectedCategory(e.target.value)}
+					disabled={isLoading}
 				/>
 
 
@@ -84,6 +86,7 @@ const HomeClient: React.FC<HomeClientProps> = ({ allPosts, allCategories }) => {
 					onChange={(e) => setSortOrder(e.target.value as Sort)} 
 					options={sortOrderOptions} 
 					defaultValue="Pas de tri" 
+					disabled={isLoading}
 				/>
 
 				<Button 
@@ -93,10 +96,17 @@ const HomeClient: React.FC<HomeClientProps> = ({ allPosts, allCategories }) => {
 					icon={IoSearch}
 				>Rechercher</Button>
 			</div>
-
-			{ isSorted && (<p className="text-gray-500 mb-4">{posts.length} article(s) trouvé(s)</p>) }
-			
-			<DisplayArticle posts={posts} />
+			{isLoading ? (
+				<div className="flex justify-center items-center h-32">
+					<div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div>
+				</div>
+			) : (
+				<>
+					{ isSorted && (<p className="text-gray-500 mb-4">{posts.length} article(s) trouvé(s)</p>) }
+				
+					<DisplayArticle posts={posts} />
+				</>
+			)}
 		</div>
 	);
 }

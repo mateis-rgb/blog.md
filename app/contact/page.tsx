@@ -8,6 +8,7 @@ import Button from "../components/Button";
 import { Option } from "../types";
 
 const Contact = () => {
+	const [isLoading, setIsLoading] = useState(false);
 	const [formData, setFormData] = useState({
 		name: "",
 		email: "",
@@ -19,6 +20,7 @@ const Contact = () => {
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
+
 		setFormData({
 			...formData,
 			[name]: value,
@@ -27,10 +29,13 @@ const Contact = () => {
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
+		setIsLoading(true);
 
 		// Envoi du formulaire ici (par exemple à un serveur)
-		console.log(formData)
+		console.log(formData);
+
 		setIsSubmitted(true);
+		setIsLoading(false);
 	};
 
 	const subjectOptions: Option<string>[] = [
@@ -57,6 +62,7 @@ const Contact = () => {
 					<div className="space-y-4">
 						<div>
 							<Input
+								disabled={isLoading}
 								id="name"
 								type="text"
 								name="name"
@@ -70,6 +76,7 @@ const Contact = () => {
 
 						<div>
 							<Input
+								disabled={isLoading}
 								id="email"
 								type="email"
 								name="email"
@@ -83,6 +90,7 @@ const Contact = () => {
 
 						<div>
 							<Input
+								disabled={isLoading}
 								id="message"
 								type="textarea"
 								name="message"
@@ -96,6 +104,7 @@ const Contact = () => {
 
 						<div>
 							<Select
+								disabled={isLoading}
 								name="subject"
 								value={formData.subject}
 								onChange={handleChange}
@@ -110,6 +119,8 @@ const Contact = () => {
 							type="submit"
 							variant="primary"
 							size="medium"
+							loading={isLoading}
+							disabled={formData.email === "" || formData.message === "" || formData.name === ""}
 						>
 							Envoyer
 						</Button>
