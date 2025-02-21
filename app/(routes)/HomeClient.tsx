@@ -1,7 +1,7 @@
 "use client"
 
 import { KeyboardEvent, useState } from "react"
-import { HomeClientProps, Option, Sort } from "@/app/types"
+import { Category, HomeClientProps, Option, Post, Sort } from "@/app/types"
 
 import { IoSearch } from "react-icons/io5"
 import DisplayArticle from "@/app/components/DisplayArticle"
@@ -15,7 +15,7 @@ const HomeClient: React.FC<HomeClientProps> = ({ allPosts, allCategories }) => {
 	const [sortOrder, setSortOrder] = useState<Sort>("recent");
 	
 	const [isSorted, setIsSorted] = useState(false);
-	const [posts, setPosts] = useState(allPosts);
+	const [posts, setPosts] = useState<Post[]>(allPosts);
 
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -27,13 +27,11 @@ const HomeClient: React.FC<HomeClientProps> = ({ allPosts, allCategories }) => {
 
 	const sortCategoryOptions: Option<string>[] = [];
 
-	allCategories.forEach((category: any) => {
+	allCategories.forEach((category: Category) => {
 		sortCategoryOptions.push({ label: category, value: category })
 	});
 
 	const handleUpdate = () => {
-		console.log('re toto');
-
 		setIsLoading(true);
 
 		if (selectedCategory === "default" && searchTerm === "" && sortOrder === "default") {
@@ -45,12 +43,12 @@ const HomeClient: React.FC<HomeClientProps> = ({ allPosts, allCategories }) => {
 			setIsSorted(true);
 			
 			const filteredPosts = allPosts
-				.filter((post: any) => {
-					return post.title.toLowerCase().includes(searchTerm.toLowerCase()) && (selectedCategory === "default" || post.categories.includes(selectedCategory))
+				.filter((post: Post) => {
+					return post.attributes.title.toLowerCase().includes(searchTerm.toLowerCase()) && (selectedCategory === "default" || post.attributes.categories.includes(selectedCategory))
 				})
-				.sort((a: any, b: any) => sortOrder === "recent"
-				? new Date(b.date).getTime() - new Date(a.date).getTime()
-				: new Date(a.date).getTime() - new Date(b.date).getTime()
+				.sort((a: Post, b: Post) => sortOrder === "recent"
+				? new Date(b.attributes.date).getTime() - new Date(a.attributes.date).getTime()
+				: new Date(a.attributes.date).getTime() - new Date(b.attributes.date).getTime()
 			);
 			
 			setPosts(filteredPosts);

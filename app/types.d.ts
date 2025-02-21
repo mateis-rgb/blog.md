@@ -26,12 +26,12 @@ export type postJSONFile = {
 export type Sort = "recent" | "ancient" | "default";
 
 export interface HomeClientProps {
-	allPosts: any;
-	allCategories: any;
+	allPosts: Post[];
+	allCategories: Category[];
 }
 
 export interface DisplayArticleProps {
-	posts: any[];
+	posts: Post[];
 }
 
 export interface CodeBlockProps {
@@ -50,7 +50,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-	variant?: "primary" | "secondary" | "outline";
+	variant?: "primary" | "secondary" | "outline" | "error";
 	size?: "small" | "medium" | "large";
 	icon?: IconType;
 	iconPosition?: "left" | "right";
@@ -59,6 +59,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 	id: string;
 	type?: string;
 	rows?: number;
+	error?: string;
 }
 
 export interface Option<T> {

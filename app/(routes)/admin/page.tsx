@@ -1,12 +1,10 @@
-import { getAllPosts, scanPosts } from "@/app/lib/posts"
+import { getAllPosts, getPostById, scanPosts } from "@/app/lib/posts"
 
 import AdminClient from "./AdminClient";
 
-const AdminPage = () => {
+const AdminPage = async () => {
 	const posts = getAllPosts();
 
-	const scanPost: boolean = scanPosts();
-	
 	return <AdminClient posts={posts} />;
 }
 

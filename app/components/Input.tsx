@@ -1,7 +1,7 @@
 import { InputProps } from "../types";
 
 const Input: React.FC<InputProps> = ({
-	variant = "primary",
+	variant,
 	size = "medium",
 	icon: Icon,
 	iconPosition = "left",
@@ -12,9 +12,12 @@ const Input: React.FC<InputProps> = ({
 	id,
 	type,
 	rows,
+	error,
 	...props
 }) => {
 	const baseClasses = "flex items-center px-3 py-2 border rounded-lg focus:outline-none transition-all duration-200";
+
+	variant = error ? "error" : "primary";
 
 	const sizeClasses = {
 		small: "text-sm",
@@ -25,14 +28,15 @@ const Input: React.FC<InputProps> = ({
 	const variantClasses = {
 		primary: "bg-white text-gray-800 border-gray-300 focus:ring-2 focus:ring-blue-600",
 		secondary: "bg-gray-100 text-gray-800 border-gray-300 focus:ring-2 focus:ring-gray-600",
+		error: "bg-red-100 text-red-800 border-red-300 focus:ring-2 focus:ring-red-600",
 		outline: "bg-transparent text-gray-700 border-gray-500 focus:ring-2 focus:ring-gray-400",
 	}[variant];
 
 	const disabledClasses = disabled || loading ? "opacity-50 cursor-not-allowed" : "";
 
 	return (
-		<div className="flex flex-col space-y-1">
-			{label && <label htmlFor={id} className="text-sm text-gray-700">{label}</label>}
+		<div className="flex flex-col space-y-1 mb-4">
+			{label && <label htmlFor={id} className="text-sm text-gray-700 dark:text-gray-400">{label}</label>}
 			
 			<div className="relative">
 				{ type === "textarea" ? (
@@ -62,6 +66,8 @@ const Input: React.FC<InputProps> = ({
 					</>
 				) }
 			</div>
+
+			{ error && <p className="text-red-500 text-sm">{error}</p> }
 		</div>
 	);
 };

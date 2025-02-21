@@ -9,40 +9,121 @@ import CodeBlock from "@/app/components/CodeBlock";
 import Input from "@/app/components/Input";
 import { HiOutlineDownload, HiOutlineTrash, HiOutlineUpload } from "react-icons/hi";
 import ReactMarkdown from "react-markdown"
+import { validateMaxLength, validateMinLength, validateRequired } from "@/app/validator/form";
+
+type FormDataName = "Title" | "Content" | "Description"
+
+type FormData = {
+	Title: string;
+	Content: string;
+	Description: string;
+}
 
 const EditPage = () => {
 	const [isLoading, setIsLoading] = useState(false);
 
-	const [title, setTitle] = useState("");
-	const [content, setContent] = useState("");
-	const [description, setDescription] = useState("");
+	const [formData, setFormData] = useState<FormData>({ Title: "", Content: "", Description: "" });
+
+	const [errors, setErrors] = useState<FormData>({ Title: "", Content: "", Description: "" });
 
 	// Charger un brouillon stocké en local
 	useEffect(() => {
-		const savedTitle = localStorage.getItem("draftTitle");
-		const savedContent = localStorage.getItem("draftContent");
-		const savedDescription = localStorage.getItem("draftDescription");
+		// const savedTitle = localStorage.getItem("draftTitle");
+		// const savedContent = localStorage.getItem("draftContent");
+		// const savedDescription = localStorage.getItem("draftDescription");
 
-		if (savedTitle) setTitle(savedTitle);
-		if (savedContent) setContent(savedContent);
-		if (savedDescription) setDescription(savedDescription);
+		// const newFormData: FormData = { 
+		// 	Title: localStorage.getItem("draftTitle")!, 
+		// 	Content: localStorage.getItem("draftContent")!, 
+		// 	Description: localStorage.getItem("draftDescription")!
+		// };
+
+		// if (savedDescription) newFormData.Description = savedDescription;
+		// if (savedContent) newFormData.Content = savedContent;
+		// if (savedTitle) newFormData.Title = savedTitle;
+
+		setFormData({ 
+			Title: localStorage.getItem("draftTitle")!, 
+			Content: localStorage.getItem("draftContent")!, 
+			Description: localStorage.getItem("draftDescription")!
+		});
 	}, []);
 
 	// Sauvegarde automatique du brouillon
 	useEffect(() => {
-		localStorage.setItem("draftTitle", title);
-		localStorage.setItem("draftContent", content);
-		localStorage.setItem("draftDescription", description);
-	}, [title, content, description]);
+		localStorage.setItem("draftTitle", formData.Title);
+		localStorage.setItem("draftContent", formData.Content);
+		localStorage.setItem("draftDescription", formData.Description);
+	}, [formData]);
+
+	const handleChange = (e: any) => {
+		const { name, value }: { name: FormDataName, value: string } = e.target;
+
+		setFormData({ ...formData, [name]: value});
+
+		const newErrors = { ...errors };
+
+		if (name === "Title") {
+			if (!validateRequired(value)) {
+				newErrors.Title = 'Ce champ est requis.';
+			}
+			else if (!validateMinLength(value, 4)) {
+				newErrors.Title = 'Le titre doit comporter au moins 4 caractères.'
+			}
+			else if (!validateMaxLength(value, 50)) {
+				newErrors.Title = 'Le titre ne doit pas exceder 50 caractères.'
+			}
+			else {
+				newErrors.Title = "";
+			}
+		}
+
+		if (name === "Description") {
+			if (!validateRequired(value)) {
+				newErrors.Description = 'Ce champ est requis.';
+			}
+			else if (!validateMinLength(value, 4)) {
+				newErrors.Description = 'La description doit comporter au moins 4 caractères.'
+			}
+			else if (!validateMaxLength(value, 255)) {
+				newErrors.Description = 'La description ne doit pas exceder 255 caractères.'
+			}
+			else {
+				newErrors.Description = "";
+			}
+		}
+
+		if (name === "Content") {
+			if (!validateRequired(value)) {
+				newErrors.Content = 'Ce champ est requis.';
+			}
+			else if (!validateMinLength(value, 4)) {
+				newErrors.Content = 'Le contenu doit comporter au moins 4 caractères.'
+			}
+			else {
+				newErrors.Content = "";
+			}
+		}
+
+		setErrors(newErrors);
+	}
 
 	const add2Blog = () => {
-		
+		if (Object.keys(errors).length === 0 && Object.values(formData).every(validateRequired)) {
+			console.log("ok");
+			console.log(formData);
+		}
+		else {
+			console.log("pas ok, corriger les problèmes")
+		}
 	}
 
 	// Générer un fichier .md
 	const downloadMarkdown = () => {
+		setIsLoading(true);
+
 		const blob = new Blob([
-			`---\ntitle: "${title}"\ndescription: "${description}"\ndate: "${new Date().toISOString()}"\n---\n\n${content}`,
+			`---\ntitle: "${formData.Title}"\ndescription: "${formData.Description}"\ndate: "${new Date().toISOString()}"\n---\n\n${formData.Content}`,
 		], { 
 			type: "text/markdown"
 		});
@@ -50,18 +131,22 @@ const EditPage = () => {
 		const link = document.createElement("a");
 
 		link.href = URL.createObjectURL(blob);
-		link.download = `${title.replace(/\s+/g, "-").toLowerCase()}.md`;
+		link.download = `${formData.Title.replace(/\s+/g, "-").toLowerCase()}.md`;
 		link.click();
+		
+		setIsLoading(false);
 	}
 
 	const resetFields = () => {
-		setTitle("");
-		setContent("");
-		setDescription("");
+		setIsLoading(true);
+
+		setFormData({ Title: "", Content: "", Description: "" });
 
 		localStorage.removeItem("draftTitle");
 		localStorage.removeItem("draftContent");
 		localStorage.removeItem("draftDescription");
+		
+		setIsLoading(false);
 	}
 
 	return (
@@ -74,24 +159,28 @@ const EditPage = () => {
 			<Input
 				id="title"
 				type="text"
+				name="Title"
 				placeholder="Titre de l'article*"
-				value={title}
-				onChange={(e) => setTitle(e.target.value)}
-				className="w-full mb-4"
+				value={formData.Title}
+				onChange={handleChange}
+				className="w-full"
 				disabled={isLoading}
 				required
+				error={errors.Title}
 			/>
 
 			{/* Description */}
 			<Input
-				id="title"
+				id="description"
 				type="text"
+				name="Description"
 				placeholder="Description de l'article*"
-				value={description}
-				onChange={(e) => setDescription(e.target.value)}
-				className="w-full mb-4"
+				value={formData.Description}
+				onChange={handleChange}
+				className="w-full"
 				disabled={isLoading}
 				required
+				error={errors.Description}
 			/>
 
 			<div className="grid grid-cols-2 gap-4">
@@ -99,11 +188,13 @@ const EditPage = () => {
 				<Input
 					id="content"
 					type="textarea"
+					name="Content"
 					placeholder="Écris ton article ici..."
-					value={content}
-					onChange={(e) => setContent(e.target.value)}
+					value={formData.Content}
+					onChange={handleChange}
 					className="w-full h-96 p-2 border rounded-md"
 					disabled={isLoading}
+					error={errors.Content}
 				/>
 
 				{/* Aperçu en temps réel */}
@@ -112,7 +203,7 @@ const EditPage = () => {
 
 					<ReactMarkdown
 						className="prose dark:prose-invert"
-						children={content}
+						children={formData.Content}
 						remarkPlugins={[remarkGfm]}
 						rehypePlugins={[rehypeRaw]}
 

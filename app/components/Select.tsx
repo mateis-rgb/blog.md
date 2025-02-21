@@ -29,7 +29,7 @@ const Select: React.FC<SelectProps> = ({
 
 	return (
 		<div className="flex flex-col space-y-1">
-			{label && <label className="text-sm text-gray-700">{label}</label>}
+			{label && <label className="text-sm text-gray-700 dark:text-gray-400">{label}</label>}
 			
 			<div className="relative">
 				<select
