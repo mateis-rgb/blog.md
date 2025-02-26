@@ -65,7 +65,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
 
 						{/* Footer */}
 						<footer className="bg-gray-800 text-white text-center py-4 fixed bottom-0 w-full">
-							<p>© 2025 {metadata.title as string}. Tous droits réservés.</p>
+							<p>© {new Date().getUTCFullYear()} {metadata.title as string}. Tous droits réservés.</p>
 						</footer>
 					</div>
 				</body>

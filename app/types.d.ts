@@ -75,3 +75,12 @@ export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElemen
 	defaultValue?: string;
 	options: Option<T>[];
 }
+
+export type EnvKey = "ADMIN_USERNAME" | "ADMIN_PASSWORD" | "HASH_SECRET";
+
+export type EnvRow = { 
+	key: EnvKey; 
+	value: string; 
+}
+
+export type IsLoginType = "Login" | "Register";

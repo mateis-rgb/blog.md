@@ -10,10 +10,15 @@
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.16",
+    "axios": "^1.8.0",
+    "bcrypt": "^5.1.1",
     "clsx": "^2.1.1",
+    "cors": "^2.8.5",
     "framer-motion": "^12.4.4",
     "fs": "0.0.1-security",
     "gray-matter": "^4.0.3",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
     "marked": "^15.0.7",
     "next": "15.1.7",
     "nextjs-toploader": "^3.7.15",
@@ -29,6 +34,8 @@
     "uuid": "^11.1.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
