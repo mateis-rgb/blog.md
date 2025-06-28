@@ -1,4 +1,4 @@
-import { generateOrGetSecretKey } from "@/app/lib/process"
+import { generateOrGetSecretKey } from "@/client/app/lib/process"
 import { NextApiRequest, NextApiResponse } from "next"
 import jwt from "jsonwebtoken"
 

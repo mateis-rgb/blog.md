@@ -1,12 +1,11 @@
 import fs from "fs"
 import path from "path"
-import crypto, { createHmac } from "crypto"
+import { createHmac } from "crypto"
 import { v4 as uuid } from "uuid"
 
-import { EnvKey, EnvRow } from "../types"
+import { EnvKey, EnvRow } from "./types"
 
-const envPath: string = path.join(path.resolve(), "app/lib/env.config");
-
+const envPath: string = path.join(path.resolve(), "src/env.config");
 
 /**
  * The function `toEnvRow` takes a string of data, splits it into rows, and creates an array of objects

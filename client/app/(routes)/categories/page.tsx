@@ -1,15 +1,16 @@
 import Link from "next/link";
 import { getAllCategories, getPostsByCategory } from "@/app/lib/posts"
+import { Category } from "@/app/types";
 
 const CategoriesPage = () => {
-	const categories = getAllCategories();
+	const categories: Category[] = getAllCategories();
 
 	return (
 		<section className="p-6">
 			<h1 className="text-3xl font-bold mb-6">Tous les articles</h1>
 
 				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-					{categories.map((category) => {
+					{categories.map((category: Category) => {
 						const postCount = getPostsByCategory(category).length;
 
 						console.log(postCount);

@@ -1,10 +1,10 @@
-import { findRow, generateOrGetSecretKey, getEnvContent, hashVerify, rowExists } from "@/app/lib/process"
-import { EnvRow } from "@/app/types"
+import { findRow, generateOrGetSecretKey, getEnvContent, hashVerify, rowExists } from "@/client/app/lib/process"
+import { EnvRow } from "@/client/app/types"
 import { NextApiRequest, NextApiResponse } from "next"
 import jwt from "jsonwebtoken"
 import Cors from "cors"
 import Joi from "joi"
-import { runMiddleware } from "@/app/lib/auth"
+import { runMiddleware } from "@/client/app/lib/auth"
 
 const cors = Cors({
 	methods: ["POST"],

@@ -53,6 +53,7 @@ const Input: React.FC<InputProps> = ({
 					<>
 						<input
 							id={id}
+							type={type || "text"}
 							className={`${baseClasses} ${sizeClasses} ${variantClasses} ${disabledClasses} ${className}`}
 							disabled={disabled || loading}
 							{...props}

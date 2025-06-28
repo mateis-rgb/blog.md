@@ -1,6 +1,5 @@
 import { IconType } from "react-icons";
 
-
 export type Category = string;
 
 export type PostAttribute = {

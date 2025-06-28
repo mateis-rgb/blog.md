@@ -2,9 +2,9 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import jwt from 'jsonwebtoken'
 import Cors from 'cors'
 import Joi from 'joi'
-import { generateOrGetSecretKey, getEnvContent, hash, rowExists, setEnvContent } from '@/app/lib/process'
-import { runMiddleware } from '@/app/lib/auth'
-import { EnvRow } from '@/app/types'
+import { generateOrGetSecretKey, getEnvContent, hash, rowExists, setEnvContent } from '@/client/app/lib/process'
+import { runMiddleware } from '@/client/app/lib/auth'
+import { EnvRow } from '@/client/app/types'
 
 const cors = Cors({
 	methods: ['POST'],
